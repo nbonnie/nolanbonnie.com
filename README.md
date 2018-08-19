@@ -1,2 +1,2 @@
 # nolanbonnie.com
-Website hosting for my website nolanbonnie.com
+Website hosting for nolanbonnie.com
