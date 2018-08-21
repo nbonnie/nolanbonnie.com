@@ -196,7 +196,7 @@ header .navbar .dropdown-menu a {
 }
 
 header .navbar .cta-btn a {
-  background: #F73859;
+  background: #F73859 !important;
   color: #000 !important;
   padding-left: 20px !important;
   padding-right: 20px !important;
@@ -207,6 +207,13 @@ header .navbar .cta-btn a {
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease;
+ 
+}
+
+#colorlib{
+    color: lightgray;
+    position: absolute;
+    bottom: 0;
 }
 
 header .navbar .cta-btn a:hover {
@@ -1188,7 +1195,7 @@ main {
   margin-bottom: 0;
 }
 
-.site-footer a {
+.site-footer a{
   color: #F73859;
   border-bottom: 1px solid transparent;
 }
