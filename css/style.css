@@ -431,6 +431,16 @@ main {
   transition: .3s all ease;
 }
 
+/* Photo Display for Photos.html */
+#display_photo{
+    
+}
+
+/* Photo Display for Everything but Photos.html */
+#display_aside{
+    max-width: 1100px;
+}
+
 .portfolio-list li a .text h3 {
   color: #fff;
 }
@@ -452,6 +462,7 @@ main {
 /* PHOTOS PAGE */
 .grid_photo{
     height: 150px;
+    overflow: hidden;
 }
 .row {
   display: flex;
