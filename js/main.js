@@ -39,6 +39,18 @@
     }
 
   });
+    
+  var offcanvas2_toggle = $('.js-offcanvas2-toggle');
+  offcanvas2_toggle.on('click', function() {
+
+
+    if ( $('body').hasClass('offcanvas2-open') ) {
+      $('body').removeClass('offcanvas2-open');
+    } else {
+      $('body').addClass('offcanvas2-open');
+    }
+
+  });
 
 
   $(document).click(function(e) {
