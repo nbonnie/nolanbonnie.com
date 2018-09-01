@@ -61,6 +61,15 @@
       }
     }
   });
+    
+  $(document).click(function(e) {
+    var container = $('.js-offcanvas2-toggle, #offcanvas2_menu');
+    if (!container.is(e.target) && container.has(e.target).length === 0) {
+      if ( $('body').hasClass('offcanvas2-open') ) {
+        $('body').removeClass('offcanvas2-open');
+      }
+    }
+  });
 
 
   $('#date-countdown').countdown('2020/10/10', function(event) {

@@ -7,6 +7,10 @@ body {
   background: #fff;
 }
 
+img {
+    image-orientation: from-image;
+}
+
 a {
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
@@ -322,6 +326,11 @@ body.offcanvas-open .site-wrap {
 
 .offcanvas_menu ul.social li:first-child a {
   padding-left: 0;
+}
+
+
+#mandel{
+    background-size: auto;
 }
 
 /* PHOTOS TAB*/
