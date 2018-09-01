@@ -245,7 +245,7 @@ body.offcanvas-open .site-wrap {
   right: 20px;
   text-transform: uppercase;
   letter-spacing: .1em;
-  font-size: 19px;
+  font-size: 17px;
   top: 20px;
   color: black;
   padding: 0px 10px 0px 10px;
@@ -325,6 +325,45 @@ body.offcanvas-open .site-wrap {
 }
 
 /* PHOTOS TAB*/
+
+#photos_menu_tab{
+    background-color: rgba(0,0,0,.75);
+    color: white;
+}
+
+#caption{
+    color: black;
+    
+}
+
+#photos_main{
+    float: inherit;
+    padding: 4%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    text-align: center;
+    margin: auto;    
+}
+
+#photos_header{
+    float: inherit;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    color: black;
+    font-size: 3vw;
+    text-align: center;
+    padding: 3%;
+    min-height: 50px;
+}
+
+#big_photo{
+    display: block;
+}
+
 body.offcanvas2-open {
   position: relative;
   overflow: hidden;
@@ -342,13 +381,14 @@ body.offcanvas2-open .site-wrap {
   left: 20px;
   text-transform: uppercase;
   letter-spacing: .1em;
-  font-size: 19px;
   top: 20px;
   color: white;
   padding: 0px 10px 0px 10px;
   background-color: rgba(0,0,0,.75);
   border-radius: 15px;
   opacity: 1;
+  text-align: center;
+  font-size: 17px;
 }
 
 .offcanvas2-toggle:hover {
@@ -513,7 +553,7 @@ main {
 
 /* Photo Display for Photos.html */
 #display_photo{
-    
+    width: 75%;
 }
 
 /* Photo Display for Everything but Photos.html */
