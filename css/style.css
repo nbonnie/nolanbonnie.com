@@ -3,7 +3,7 @@ body {
   font-weight: 400;
   font-size: 15px;
   line-height: 1.8;
-  color: #b3b3b3;
+  color: #202020;
   background: #fff;
 }
 
@@ -341,6 +341,7 @@ body.offcanvas-open .site-wrap {
 }
 
 #caption{
+    padding: 3%;
     padding: 3%;
 }
 
@@ -765,6 +766,9 @@ main {
   letter-spacing: .1em;
 }
 
+#start_font{
+    color: black;
+}
 .upcoming-events-highlight .counter-number-item {
   background: #ffc107;
   width: 100%;
