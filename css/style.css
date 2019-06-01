@@ -330,7 +330,7 @@ body.offcanvas-open .site-wrap {
 
 
 #mandel{
-    background-size: auto;
+    
 }
 
 /* PHOTOS TAB*/
@@ -468,6 +468,7 @@ aside {
   background-size: cover;
   height: 400px;
   position: relative;
+  top: 50%;
 }
 
 @media (min-width: 576px) {
