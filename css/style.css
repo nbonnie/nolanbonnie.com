@@ -569,6 +569,7 @@ main {
 /* Photo Display for Everything but Photos.html */
 #display_aside{
     max-width: 1100px;
+    image-orientation: from-image;
 }
 
 .portfolio-list li a .text h3 {
