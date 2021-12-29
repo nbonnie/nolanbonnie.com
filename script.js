@@ -17,7 +17,6 @@ const colors = ["#24d05a", "#eb4888", "#00adef", "#FA8334"];
   setRandomLinkColor();
   setColorHoverListener();
   setBioEventListener();
-  console.log("Test 1")
   /*
   setInterval(() => {
     setRandomLinkColor();
@@ -46,17 +45,14 @@ function onPageLoad() {
   const darkModeEnabled = sessionStorage.getItem('darkMode');
     
   if(darkModeEnabled === 'false'){
-    console.log('remembered light');
     document.body.classList.add("light-mode")
     document.getElementById("toggler").checked = false;
   }
   else if(darkModeEnabled === 'true'){
-    console.log('remembered dark');
     document.body.classList.add("dark-mode")
     document.getElementById("toggler").checked = true;
   }
   else{
-    console.log('fresh');
     document.body.classList.add("dark-mode")
     document.getElementById("toggler").checked = true;
     sessionStorage.setItem('darkMode', 'true');
@@ -66,7 +62,6 @@ function onPageLoad() {
   const buttType = sessionStorage.getItem('buttType');
   
   if(buttType === 'short'){
-    console.log('remembered bio-short');
     sessionStorage.setItem('buttType','short');
     if(window.location.pathname === '/index.html') {
       document.getElementById("short").classList.add("show");
@@ -76,7 +71,6 @@ function onPageLoad() {
     }
   }
   else if(buttType === 'long'){
-    console.log('remembered bio-long');
     sessionStorage.setItem('buttType','long');
     if(window.location.pathname === '/index.html') {
       document.getElementById("short").classList.remove("show");
@@ -87,7 +81,6 @@ function onPageLoad() {
     
   }
   else{
-    console.log('pre-defined bio-short');
     sessionStorage.setItem('buttType', 'short');
   }
   
