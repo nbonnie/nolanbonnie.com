@@ -26,6 +26,12 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../style.css" />
+    
+    <script>
+      if (sessionStorage.getItem("cv_path") === null) {
+        sessionStorage.setItem("cv_path", "index.html")
+      }
+    </script>
   </head>
 
   <body>
@@ -44,7 +50,16 @@
         <a href="index.html">Home</a>
         <a href="research.html">Research</a>
         <a href="education.html">Education</a>
-        <a target="_blank" rel="noopener noreferrer" href="files/Nolan_Bonnie_CV_2022_2_21.pdf">CV</a>
+        
+        <a id = "CV_button" target="_blank" rel="noopener noreferrer" href= "" >CV</a>
+        <script>
+          var link = document.getElementById('CV_button'); 
+          link.href = sessionStorage.getItem("cv_path")
+          if (sessionStorage.getItem("cv_path") === "index.html"){
+            link.target = ""
+          }
+        </script>
+        
         <a target="_blank" rel="noopener noreferrer" href="http://linkedin.com/in/nolanbonnie">LinkedIn</a>
         <a href="files.html">Files</a>
         <a href="photos.html">Photos</a>

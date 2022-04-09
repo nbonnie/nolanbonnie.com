@@ -35,6 +35,11 @@
     />
     <link rel="stylesheet" href="./style.css" />
     
+    <!-- Set session storage for CV link -->
+    <script>
+      sessionStorage.setItem('cv_path','files/Nolan_Bonnie_CV_2022_2_21.pdf');
+    </script>
+          <!-- sessionStorage.cv_path = "files/Nolan_Bonnie_CV_2022_2_21.pdf" ; -->
   </head>
 
   <body>
@@ -52,10 +57,19 @@
           <img src="img/profile_big.jpg">
         </div>
       </div>
+      <script>
+        const path = localStorage.getItem('cv_path')
+      </script>
       <div class="links">
         <a href="research.html">Research</a>
         <a href="education.html">Education</a>
-        <a target="_blank" rel="noopener noreferrer" href="files/Nolan_Bonnie_CV_2022_2_21.pdf">CV</a>
+        
+        <a id = "CV_button" target="_blank" rel="noopener noreferrer" href= "" >CV</a>
+        <script>
+          var link = document.getElementById('CV_button'); 
+          link.href = sessionStorage.getItem("cv_path")
+        </script>
+
         <a target="_blank" rel="noopener noreferrer" href="http://linkedin.com/in/nolanbonnie">LinkedIn</a>
         <a href="files.html">Files</a>
         <a href="photos.html">Photos</a>
