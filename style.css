@@ -69,6 +69,11 @@ button:hover {
   float: left
 }
 
+.header-frame2 {
+  width: 350px;
+  float: right
+}
+
 .go-home {
   position: fixed;
   top: 5px;
@@ -185,6 +190,25 @@ tr td:nth-child(2) {
 }
 
 .img-frame-temp img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  height: 100%;
+}
+
+.img-frame2 {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 20px 10px 0;
+  border-radius: 50%;
+  overflow: hidden;
+  float: left;
+}
+
+.img-frame2 img {
   position: absolute;
   top: 50%;
   left: 50%;
