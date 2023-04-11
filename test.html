@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Photo Gallery</title>
+	<style>
+	.gallery {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			margin: 20px auto;
+			max-width: 800px;
+		}
+		.gallery img {
+			max-width: 100%;
+			height: 600px;
+		}
+      .gallery-preview {
+			height: 120px;
+			overflow: auto;
+			display: flex;
+			align-items: center;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		.gallery-preview img {
+			width: 100px;
+			height: 100px;
+			object-fit: cover;
+			cursor: pointer;
+			margin: 10px;
+			border: 2px solid #ddd;
+			border-radius: 5px;
+		}
+		.gallery-preview img.active {
+			border-color: #000000;
+		}
+	</style>
+  
+</head>
+<body>
+	<div class="gallery">
+		<img id="main-photo" src="img/photos/p1.jpg">
+		<div class="gallery-preview">
+			<img class="active" src="img/photos/p1.jpg" onclick="updateMainPhoto('img/photos/p1.jpg')">
+			<img src="img/photos/p2.jpg" onclick="updateMainPhoto('img/photos/p2.jpg')">
+			<img src="img/photos/p3.jpg" onclick="updateMainPhoto('img/photos/p3.jpg')">
+			<img src="img/photos/p4.jpg" onclick="updateMainPhoto('img/photos/p4.jpg')">
+			<img src="img/photos/p5.jpg" onclick="updateMainPhoto('img/photos/p5.jpg')">
+            <img src="img/photos/p6.jpg" onclick="updateMainPhoto('img/photos/p6.jpg')">
+		</div>
+	</div>
+
+	<script>
+		function updateMainPhoto(src) {
+			var mainPhoto = document.getElementById('main-photo');
+			mainPhoto.src = src;
+
+			var previewPhotos = document.querySelectorAll('.gallery-preview img');
+			for (var i = 0; i < previewPhotos.length; i++) {
+				previewPhotos[i].classList.remove('active');
+				if (previewPhotos[i].src === src) {
+					previewPhotos[i].classList.add('active');
+				}
+			}
+		}
+	</script>
+</body>
+</html>
