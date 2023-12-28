@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedded Video Test</title>
+</head>
+<body style="margin: 0; padding: 0; overflow: hidden; background-color: black;">
+
+    <video autoplay loop muted style="width: 100%; height: auto; display: block; margin-top: 0;">
+        <source src="./videos/ff_test.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <button onclick="goToIndex()" style="position: absolute; top: 10px; left: 10px; padding: 10px;">Go back to index</button>
+
+    <script>
+        function goToIndex() {
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+</html>
