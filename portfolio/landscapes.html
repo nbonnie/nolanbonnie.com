@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landascapes</title>
+    <link rel="stylesheet" href="css/portfolio-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500&display=swap" rel="stylesheet">
+  
+    <!-- Favicon/theme -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./../../../favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./../../../favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./../../../favicon/favicon-16x16.png">
+    <link rel="manifest" href="./../../../favicon/site.webmanifest">
+</head>
+<body>
+  <header class="menu-bar">
+        <nav>
+            <div class="nav-left">
+                <ul>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="./../../index.html">Research</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <a href="portfolio.html" class="logo-container">
+                <img src="watermark_white.png" alt="Logo" class="logo">
+            </a>
+        </nav>
+    </header>
+    <header>
+        <h1>Landscape Photography</h1>
+    </header>
+
+    <div id="gallery"></div>
+
+    <!-- Modal for Enlarged Image -->
+    <div id="modal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImg">
+        <div class="caption" id="caption"></div>
+    </div>
+
+    <script>
+        const folder = "images/landscapes/";
+        let images = [];  // Store list of image filenames
+        let currentIndex = 0;  // Track current image index
+
+        function loadImages() {
+            fetch(`${folder}images.json`)
+                .then(response => response.json())
+                .then(files => {
+                    images = files;  // Store image filenames
+                    const gallery = document.getElementById('gallery');
+                    files.forEach((file, index) => {
+                        const img = document.createElement('img');
+                        img.src = `${folder}${file}`;
+                        img.alt = 'Landscape Image';
+                        img.onclick = () => openModal(index);
+                        gallery.appendChild(img);
+                    });
+                })
+                .catch(error => console.error('Error loading images:', error));
+        }
+
+        function openModal(index) {
+            currentIndex = index;
+            const modal = document.getElementById("modal");
+            const modalImg = document.getElementById("modalImg");
+            modal.style.display = "block";
+            modalImg.src = `${folder}${images[currentIndex]}`;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("modal");
+            modal.style.display = "none";
+        }
+
+        function navigate(direction) {
+            // Wrap around with modulo to handle edge cases
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            document.getElementById("modalImg").src = `${folder}${images[currentIndex]}`;
+        }
+
+        // Close modal on Escape key press and navigate with arrow keys
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            } else if (event.key === "ArrowRight") {
+                navigate(1);  // Move to next image
+            } else if (event.key === "ArrowLeft") {
+                navigate(-1);  // Move to previous image
+            }
+        });
+
+        // Load images when the page loads
+        window.onload = loadImages;
+    </script>
+</body>
+</html>
