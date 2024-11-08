@@ -92,6 +92,31 @@
                 navigate(-1);  // Move to previous image
             }
         });
+      
+        // Swipe functionality
+        let startX;
+        const modal = document.getElementById("modal");
+        modal.addEventListener("touchstart", (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        modal.addEventListener("touchend", (e) => {
+            let endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) {
+                // Swipe left (next image)
+                navigate(1);
+            } else if (endX - startX > 50) {
+                // Swipe right (previous image)
+                navigate(-1);
+            }
+        });
+
+        // Close modal if background is clicked
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
 
         // Load images when the page loads
         window.onload = loadImages;
