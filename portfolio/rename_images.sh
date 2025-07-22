@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Navigate to the folder containing the images
-cd /path/to/your/folder
+#cd /path/to/your/folder
 
 # Initialize a counter variable
-counter=1
+counter=100
 
 # Loop through all .jpg files in the folder
 for img in *.jpg; do

@@ -14,9 +14,10 @@ generate_json() {
   # Start the JSON array
   echo "[" > "$json_file"
 
-  # Loop over files with valid image extensions
+  # Loop over files with valid image extensions, sorted numerically
   first=true
-  for img in "$folder"/*; do
+  # MODIFIED LINE: Use `ls -1` piped to `sort -V` to get a numerically sorted list.
+  for img in $(ls -1 "$folder"/* | sort -V); do
     # Get the file extension and convert it to lowercase
     extension="${img##*.}"
     extension="$(echo "$extension" | tr '[:upper:]' '[:lower:]')"
