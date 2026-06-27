@@ -1,104 +1,778 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Nolan Bonnie</title>
-    <meta
-      name="description"
-      content="Webpage for Nolan Richard Bonnie. PhD Studnet at CU Boulder"
-    />
-    <meta 
-      name="webpage-design"
-      content="The theme of this webpage is inspired and adapted from Cassidy Williams https://cassidoo.co/"
-    />
-    <meta name="theme-color" content="#000000" />
+<head>
+  <meta charset="UTF-8">
+  <title>Nolan Bonnie</title>
+  <meta name="description" content="Webpage for Nolan Richard Bonnie. PhD Student at CU Boulder" />
+  <meta name="theme-color" content="#0b0c10" />
 
-    <!-- Favicon/theme -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/favicon/site.webmanifest">
-    
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6C6RGGNTW"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+   <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6C6RGGNTW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-V6C6RGGNTW');
+  </script>
 
-      gtag('config', 'G-V6C6RGGNTW');
-    </script>
-    
-    <!-- Font Style From Google -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto+Mono"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./style.css" />
-    
-    <!-- Set session storage for CV link -->
-    <script>
-      sessionStorage.setItem('cv_path','files/Nolan_Bonnie_CV_2026_03_23.pdf');
-    </script>
-          <!-- sessionStorage.cv_path = "files/Nolan_Bonnie_CV_2022_2_21.pdf" ; -->
-  </head>
+  <!-- Favicon/theme -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
+  <link rel="manifest" href="./favicon/site.webmanifest">
 
-  <body>
-    <div class="header">
-      <!-- placeholder for future development -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet" />
+  <style>
+    :root { 
+      --bg: #0b0c10; 
+      --text: #e2e8f0; 
+      --accent: #00adef; 
+      --node-base: #00adef; 
+    }
+    
+    body, html { 
+      margin: 0; 
+      padding: 0; 
+      width: 100%; 
+      height: 100%;
+      background: var(--bg); 
+      color: var(--text); 
+      font-family: 'Roboto Mono', monospace; 
+      line-height: 1.7; 
+      font-size: 18px; 
+      overflow-x: hidden;
+    }
+
+    #swarm-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0; 
+      pointer-events: none; 
+    }
+
+    #firefly-instructions {
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #ffffff;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease-in-out;
+      z-index: 10;
+      text-shadow: 0 0 10px rgba(0, 173, 239, 0.6);
+    }
+
+    #restore-content-btn {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2.5rem;
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease-in-out, color 0.2s, transform 0.2s;
+      z-index: 10;
+    }
+    
+    #restore-content-btn:hover {
+      color: var(--accent);
+      transform: translateY(-50%) translateX(-8px);
+    }
+
+    body.content-hidden #restore-content-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Main Wrapper */
+    .container { 
+      max-width: 800px; 
+      margin: 0 auto; 
+      padding: 4rem 2rem; 
+      position: relative;
+      z-index: 1; 
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    body.content-hidden .container {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Header */
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      width: 100%;
+    }
+    .header-text h1 { color: #ffffff; margin-bottom: 0.2rem; font-size: 2.2rem; margin-top: 0; }
+    .header-text h2 { font-size: 1.1rem; font-weight: normal; margin-top: 0; color: #94a3b8; }
+    
+    .header-img img {
+      width: 175px;
+      height: 175px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--node-base);
+      box-shadow: 0 0 15px rgba(69, 162, 158, 0.2);
+    }
+    
+    /* Navigation */
+    .links { 
+      position: relative; 
+      margin: 1.5rem 0 2.5rem 0; 
+      display: flex; 
+      align-items: center;
+      gap: 1.5rem; 
+      flex-wrap: wrap; 
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 1rem;
+    }
+    .links a { 
+      color: var(--accent); 
+      text-decoration: none; 
+      text-transform: lowercase; 
+      font-weight: bold;
+      transition: color 0.2s;
+    }
+    .links a:hover { color: #ffffff; }
+    
+    .nav-slider {
+      position: absolute;
+      height: 2px;
+      background: var(--accent);
+      transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                  width 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                  top 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      pointer-events: none;
+    }
+
+    #hide-content-btn {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin-left: auto;
+      padding: 0;
+      transition: color 0.2s, transform 0.2s;
+      line-height: 1;
+    }
+    #hide-content-btn:hover {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+    
+    /* Navigation */
+    .page { display: none; }
+    .page.show { display: block; }
+    
+    .page.wipe-out { animation: wipeOut 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+    .page.wipe-in { animation: wipeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+    @keyframes wipeOut {
+      0%   { clip-path: inset(0 0 0 0); opacity: 1; transform: translateY(0); }
+      100% { clip-path: inset(0 0 100% 0); opacity: 0; transform: translateY(-10px); }
+    }
+    @keyframes wipeIn {
+      0%   { clip-path: inset(0 0 100% 0); opacity: 0; transform: translateY(10px); }
+      100% { clip-path: inset(0 0 0 0); opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Bio Switcher */
+    .bio-switcher { margin-bottom: 1.5rem; }
+    button { 
+      background: none; border: 1px solid var(--node-base); color: var(--text);
+      padding: 0.4rem 1rem; cursor: pointer; font-family: inherit; margin-right: 0.5rem;
+      transition: all 0.2s; font-size: 0.9rem;
+    }
+    button:hover, button.active { background: var(--node-base); color: var(--bg); }
+    .bio { display: none; }
+    .bio.show { display: block; animation: wipeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+    
+    /* Section Headers */
+    .section-block { margin-top: 2rem; margin-bottom: 3rem; }
+    .page-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .page-header img { width: 75px; height: 75px; border-radius: 8px; object-fit: cover; }
+    .page-header h3 { color: #ffffff; margin: 0; font-size: 1.4rem; }
+    .page-header h4 { color: var(--accent); margin: 0; font-size: 1rem; font-weight: normal; }
+
+    /* Interactive Nodes */
+    .node { 
+      position: relative;
+      color: var(--node-base); 
+      cursor: crosshair; 
+      font-weight: bold; 
+      display: inline-block;
+      transition: color 0.3s;
+    }
+    .node:hover { color: var(--accent); }
+
+    .node::after {
+      content: attr(data-text); 
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #ffffdd;
+      text-shadow: 0 0 10px #ffff33, 0 0 20px #ffff33;
+      clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
+      opacity: 0;
+      pointer-events: none; 
+    }
+
+    .node.is-flashing::after {
+      animation: ripple-flash 0.4s ease-out forwards;
+    }
+
+    @keyframes ripple-flash {
+      0%   { clip-path: circle(0% at var(--x) var(--y)); opacity: 1; }
+      15%  { clip-path: circle(150% at var(--x) var(--y)); opacity: 1; } 
+      40%  { opacity: 1; } 
+      100% { clip-path: circle(150% at var(--x) var(--y)); opacity: 0; } 
+    }
+    
+    p a, .bio a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      font-weight: bold;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    p a:visited, .bio a:visited { color: var(--accent); }
+    p a:hover, .bio a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 8px rgba(0, 173, 239, 0.8);
+    }
+
+    /* Iframe Container for maps embedding */
+    .map-container {
+      width: 100%;
+      height: 550px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid #1e293b;
+      margin-top: 2rem;
+      background: #111;
+    }
+
+    .map-container iframe {
+      position: absolute;
+      top: -60px; /* Crops the header */
+      width: calc(100% + 0px); 
+      height: calc(100% + 160px); 
+      border: none;
+    }
+
+    /* Mobile Viewport Tweaks */
+    @media (max-width: 600px) {
+      body, html {
+        font-size: 16px;
+      }
+      .container {
+        padding: 2rem 1rem;
+      }
+      .site-header {
+        flex-direction: column-reverse; 
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+      .header-img img {
+        width: 100px;
+        height: 100px;
+      }
+      .links {
+        gap: 1rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <canvas id="swarm-canvas"></canvas>
+
+  <div id="firefly-instructions">click to excite fireflies around your cursor</div>
+  <button id="restore-content-btn" title="Return to Portfolio">←</button>
+
+  <div class="container" id="main-content">
+    
+    <header class="site-header">
+      <div class="header-text">
+        <h1>Nolan Bonnie</h1>
+        <h2>CS Ph.D. Student | CU Boulder</h2>
+      </div>
+      <div class="header-img">
+        <img src="img/nbonnie.jpg" alt="Nolan Bonnie">
+      </div>
+    </header>
+    
+    <div class="links">
+      <div class="nav-slider" id="nav-slider"></div>
+      <a href="/" class="nav-link active-link" data-target="page-home">Home</a>
+      <a href="/research" class="nav-link" data-target="page-research">Research</a>
+      <a href="/CVs/Nolan_Bonnie_CV_2026_03_23.pdf" target="_blank" rel="noopener noreferrer">CV</a>
+      <a href="http://linkedin.com/in/nolanbonnie" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://github.com/nbonnie" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="/photography/" class="external-link">Photography</a>
+      <a href="/travel" class="nav-link" data-target="page-travel">Travel</a>
+      
+      <button id="hide-content-btn" title="View Simulation View">→</button>
     </div>
-    <div class="container">
-      <div class="header-section">
-        <div class="header-frame">
-          <h1>Nolan Bonnie</h1>
-          <h2>CS Ph.D. Student</h2> 
-          <h2>University of Colorado Boulder</h2>
-        </div>
-        <div class="img-frame">
-          <img src="img/nbonnie.jpg">
-        </div>
-      </div>
-      <script>
-        const path = localStorage.getItem('cv_path')
-      </script>
-      <div class="links">
-        <a href="research.html">Research</a>
-<!--        <a href="education.html">Education</a>-->
-        
-        <a id = "CV_button" target="_blank" rel="noopener noreferrer" href= "" >CV</a>
-        <script>
-          var link = document.getElementById('CV_button'); 
-          link.href = sessionStorage.getItem("cv_path")
-        </script>
 
-        <a target="_blank" rel="noopener noreferrer" href="http://linkedin.com/in/nolanbonnie">LinkedIn</a>
-        <a href="files.html">Files</a>
-        <a href="portfolio/portfolio.html">Photography</a>
-        <a href="travel.html">Travel</a>
-        
-      </div>
+    <div id="page-home" class="page show">
       <div class="bio-switcher">
-        <div class="toggler">
-          <button id="short" class="show">Short</button>
-          <button id="long">Long</button>
-        </div>
-        <div class="bio short show" id="bio-short-text">
-          Hello! My name is Nolan Bonnie, and I am currently a <span>Computer Science Ph.D. student</span> at the <span class="orange">University of Colorado Boulder</span>, advised by <a href = "https://www.peleglab.com/">Orit Peleg</a>. I received my bachelor's degree in <span class="green">mathematics</span> from the <span class="blue">University of California, Irvine</span>. My research involves complex systems, excitable networks, computer vision, and the <span class="green">physics of living systems</span>, with a focus on emergent patterns and information flow in <span class="orange">swarm intelligence</span>. My technical expertise includes statistical learning, AI planning, <span class="blue">computer vision</span>, spatiotemporal reconstruction, and network analysis. 
-        </div>
-        <div class="bio long" id="bio-long-text">
-          Welcome to my website! My name is Nolan Bonnie, and I'm a <span class="green">Ph.D. student</span> in the computer science department at the <span>University of Colorado Boulder</span>. I am fascinated by the application of <span class="blue">complex systems</span> theory and computational modeling to explore the emergent nature of <span class="orange">intelligence</span> in biological and artificial systems. My current work centers on how <span class="green">network structures</span> and <span class="orange">information flow</span> mechanisms combine to produce intelligent behavior in <span class="blue">multi-agent systems</span>.
-          <br><br>
-          I received my bachelor's degree in <span class="blue">mathematics</span> with a specialization in data science from the <span class="orange">University of California, Irvine</span>, where I first developed a passion for data-driven research. As an undergraduate, I had the opportunity to contribute to several research projects, which you can read about <a href="education.html">here</a>. Before starting my Ph.D., I was a member of the technical staff at <span class="blue">Sandia National Laboratories</span>, where I developed novel <span class="green">AI planning</span> and <span class="orange">cybersecurity</span> techniques for national security applications. You can read more about my work at Sandia <a href="research.html">here</a>.
-          <br><br>
-          I am also associated with the <a href="https://www.colorado.edu/certificate/iqbiology/">Interdisciplinary Quantitative Biology</a> Program at CU Boulder, a unique program designed to train scientists to bridge traditional research disciplines and work effectively in interdisciplinary teams.
-          <br><br>
-          In my spare time, you can find me outside <span class="orange">running</span>, <span class="blue">climbing</span>, or capturing moments through <a href="https://nolanbonnie.com/portfolio/portfolio.html">photography</a>. I especially love getting out on my <span class="green">mountain bike</span>. I am a certified <a target="_blank" rel="noopener noreferrer" href="https://www.nationalmtb.org/">NICA coach</a>, helping high-school students develop skills for safe and efficient mountain biking. I also enjoy teaching them about trail etiquette, <span class="orange">wilderness first-aid</span>, and <span class="blue">mechanical repairs</span>.  
-        </div>
-      <div class="dark-mode-toggler">
-        <input type="checkbox" id="toggler" />
-        <label for="toggler" aria-label="Toggler for Dark Mode"></label>
+        <button id="btn-short" class="active">Short</button>
+        <button id="btn-long">Long</button>
+      </div>
+
+      <div class="bio show" id="bio-short">
+        Hello! My name is Nolan Bonnie, and I am currently a <span class="node">Computer Science Ph.D. student</span> at the University of Colorado Boulder. My research involves complex systems, <span class="node">excitable networks</span>, computer vision, and the physics of living systems, with a focus on emergent patterns and <span class="node">information flow modeling</span> in swarm intelligent systems. My technical expertise includes statistical learning, AI planning, <span class="node">computer vision</span>, spatiotemporal reconstruction, and network analysis.
+      </div>
+      
+      <div class="bio" id="bio-long">
+        Welcome to my website! My name is Nolan Bonnie, and I'm a <span class="node">Ph.D. student</span> in the computer science department at the University of Colorado Boulder. I am fascinated by the application of <span class="node">complex systems theory</span> and computational modeling to explore the emergent nature of intelligence in biological and artificial systems. My current work centers on how <span class="node">network structures</span> and information flow mechanisms combine to produce intelligent behavior in <span class="node">multi-agent systems</span>.
+        <br><br>
+        I received my bachelor's degree in <span class="node">mathematics</span> with a specialization in data science from the <span class="node">University of California, Irvine</span>, where I first developed a passion for data-driven research. As an undergraduate, I had the opportunity to contribute to several research projects spanning topics from atmospheric science, to computer vision. Before starting my Ph.D., I was a member of the technical staff at <span class="node">Sandia National Laboratories</span>, where I developed novel <span class="node">AI planning</span> and <span class="node">cybersecurity</span> techniques for national security applications. You can read more about my work at Sandia <a href="/research" class="nav-link" data-target="page-research">here</a>.
+        <br><br>
+        I am also associated with the <a href="https://www.colorado.edu/certificate/iqbiology/">Interdisciplinary Quantitative Biology</a> Program at CU Boulder, a unique program designed to train scientists to bridge traditional research disciplines and work effectively in interdisciplinary teams.
+        <br><br>
+        In my spare time, you can find me outside <span class="node">running</span>, <span class="node">climbing</span>, or capturing moments through <a href="https://nolanbonnie.com/portfolio/portfolio.html">photography</a>. I especially love getting out on my <span class="node">mountain bike</span>. I am a certified <a target="_blank" rel="noopener noreferrer" href="https://www.nationalmtb.org/">NICA coach</a>, helping high-school students develop skills for safe and efficient mountain biking. I also enjoy teaching them about trail etiquette, <span class="node">wilderness first-aid</span>, and <span class="node">mechanical repairs</span>.  
       </div>
     </div>
 
-    <script src="./script.js"></script>
-  </body>
+    <div id="page-research" class="page">
+      <div class="section-block">
+        <div class="page-header">
+          <img src="img/cu.png" alt="CU Boulder Logo">
+          <div>
+            <h3>University of Colorado Boulder</h3>
+            <h4>Graduate Research Assistant</h4>
+          </div>
+        </div>
+        <p>
+          I explore <span class="node">collective intelligence</span> in biological networks through a computational and bio-physics lens. My work utilizes <span class="node">computer vision</span>, deep neural networks, and mathematical modeling to understand information flow in <span class="node">swarm intelligence</span> systems. Active projects include developing automated software pipelines for <span class="node">3D spatiotemporal reconstructions</span> of firefly swarms, quantifying multi-agent synchrony, and modeling communication as <span class="node">excitable media</span>.
+        </p>
+        <p>My thesis centers on three main concepts:</p>
+        <p>
+          <span class="node">1) Individual Contributions to Collective Behavior:</span> How do individual agent interactions and underlying network topologies drive <span class="node">emergent properties</span>? I analyze large-scale swarm data to understand how localized interactions create coordinated behavior across a network.
+        </p>
+        <p>
+          <span class="node">2) Spatiotemporal Information Transfer:</span> How do <span class="node">spatial dynamics</span> enhance communication? By applying various machine learning techniques, I investigate how movement patterns paired with binary-like signals encode complex information.
+        </p>
+        <p>
+          <span class="node">3) Quantification of Emergent Coupling:</span> How do we measure macroscopic coordination in the wild? Using a custom cloud-based <span class="node">citizen science platform</span>, I analyze the world's largest <span class="node">3D reconstruction dataset</span> of firefly swarms. By developing improved synchrony quantification methods, I can mathematically isolate and measure emergent coupling, revealing a surprisingly high number of synchronous species and uncovering intentionally coupled <span class="node">inhibitory flashing</span> behaviors.
+        </p>
+      </div>
+
+      <div class="section-block">
+        <div class="page-header">
+          <img src="img/Sandia.png" alt="Sandia Logo">
+          <div>
+            <h3>Sandia National Laboratories</h3>
+            <h4>R&D S&E Cybersecurity</h4>
+          </div>
+        </div>
+        <p>
+          At Sandia National Laboratories, I developed innovative <span class="node">AI and ML</span> solutions for complex <span class="node">cybersecurity emulation</span> challenges.
+        </p>
+        <p>
+          I held the role of R&D S&E - Cybersecurity as a member of the technical staff, where I had the privilege of collaborating with incredibly talented scientists and engineers. My projects included designing a <span class="node">novel AI planning agent</span> for dynamic graph traversal problems, creating scalable <span class="node">big data analytics</span> solutions for over 6 petabytes of network traffic data, and advancing threat detection methodologies. 
+        </p>
+        <p>
+          My AI planning contributions in project ATHENA won the prestigious <a href="https://www.rdworldonline.com/rd-100-2022-winner/automated-threat-estimator-for-networks-and-applications-athena/">R&D 100 Award</a> in 2022. This work also led to multiple patents, which are currently filed and under review.
+        </p>
+      </div>
+    </div>
+    
+    <div id="page-travel" class="page">
+      <div class="section-block">
+
+        <p>
+          Ever since I first ventured outside of the United States, I was in <span class="node">love with traveling</span>. I really enjoy getting to see how other cultures and communities work.
+        </p>
+        <p>
+          Every time I come across a place I'd like to visit, I add it to my <span class="node">Google Maps list</span>, which is embedded below. I tend to pin specific places like a good hiking trail, a <span class="node">national park</span>, or a scenic view. I hope that you find inspiration from my travel list!
+        </p>
+
+        <div class="map-container">
+          <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1S9bqvAnV-w1p0oIk1SLp6ggZgiaujV5H&ehbc=2E312F&z=2&ll=33.7127, -38.0059"></iframe>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+
+
+    // Page navigation
+
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pages = document.querySelectorAll('.page');
+    const slider = document.getElementById('nav-slider');
+    let isNavigating = false;
+
+    function updateSlider(targetEl) {
+      if (!targetEl || !slider) return;
+      slider.style.width = targetEl.offsetWidth + 'px';
+      slider.style.left = targetEl.offsetLeft + 'px';
+      slider.style.top = (targetEl.offsetTop + targetEl.offsetHeight + 4) + 'px';
+    }
+
+    window.addEventListener('load', () => {
+      const activeLink = document.querySelector('.nav-link.active-link');
+      updateSlider(activeLink);
+    });
+    
+    window.addEventListener('resize', () => {
+      const activeLink = document.querySelector('.nav-link.active-link');
+      updateSlider(activeLink);
+    });
+
+    function navigateTo(targetId, url, pushHistory = true) {
+      if (isNavigating) return;
+      
+      const targetPage = document.getElementById(targetId);
+      const activePage = document.querySelector('.page.show');
+      
+      if (!targetPage || (activePage && activePage.id === targetId)) return;
+
+      isNavigating = true;
+
+      if (pushHistory) {
+        window.history.pushState({ page: targetId }, '', url);
+      }
+
+      navLinks.forEach(link => link.classList.remove('active-link'));
+      const activeLink = document.querySelector(`.nav-link[data-target="${targetId}"]`);
+      if (activeLink) {
+        activeLink.classList.add('active-link');
+        updateSlider(activeLink);
+      }
+
+      if (activePage) {
+        activePage.classList.add('wipe-out');
+        
+        setTimeout(() => {
+          activePage.classList.remove('show', 'wipe-out');
+          targetPage.classList.add('show', 'wipe-in');
+          setTimeout(() => {
+            targetPage.classList.remove('wipe-in');
+            isNavigating = false;
+          }, 350);
+        }, 350); 
+      } else {
+        targetPage.classList.add('show');
+        isNavigating = false;
+      }
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('data-target');
+        const url = link.getAttribute('href');
+        navigateTo(targetId, url, true);
+      });
+    });
+
+    window.addEventListener('popstate', (e) => {
+      const targetId = e.state ? e.state.page : 'page-home';
+      navigateTo(targetId, location.pathname, false);
+    });
+
+
+    let instructionTimer;
+    
+    document.getElementById('hide-content-btn').addEventListener('click', () => {
+      document.body.classList.add('content-hidden');
+      const instructions = document.getElementById('firefly-instructions');
+      
+      // Trigger instruction fade in
+      instructions.style.opacity = '1';
+      
+      clearTimeout(instructionTimer);
+      instructionTimer = setTimeout(() => {
+        if(document.body.classList.contains('content-hidden')) {
+          instructions.style.opacity = '0';
+        }
+      }, 2500);
+    });
+
+    document.getElementById('restore-content-btn').addEventListener('click', () => {
+      document.body.classList.remove('content-hidden');
+      document.getElementById('firefly-instructions').style.opacity = '0';
+      
+      setTimeout(() => {
+        const activeLink = document.querySelector('.nav-link.active-link');
+        updateSlider(activeLink);
+      }, 50);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.body.classList.contains('content-hidden')) {
+        document.getElementById('restore-content-btn').click();
+      }
+    });
+
+    // Toggle Bio Short/Long
+    const btnShort = document.getElementById('btn-short');
+    const btnLong = document.getElementById('btn-long');
+    const bioShort = document.getElementById('bio-short');
+    const bioLong = document.getElementById('bio-long');
+
+    function switchBio(showBtn, hideBtn, showBio, hideBio) {
+      if (showBtn.classList.contains('active')) return;
+      
+      showBtn.classList.add('active'); 
+      hideBtn.classList.remove('active');
+      
+      hideBio.classList.remove('show');
+      showBio.classList.remove('wipe-in'); 
+      void showBio.offsetWidth; 
+      
+      showBio.classList.add('show', 'wipe-in');
+    }
+
+    if(btnShort && btnLong) {
+      btnShort.addEventListener('click', () => switchBio(btnShort, btnLong, bioShort, bioLong));
+      btnLong.addEventListener('click', () => switchBio(btnLong, btnShort, bioLong, bioShort));
+    }
+
+
+    // Firefly sim code
+    const canvas = document.getElementById('swarm-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    const NUM_FIREFLIES = 85; 
+    const KURA_K = 0.002;    
+    const PULSE_KICK = 0.85;     
+    const FLASH_HOLD_MS = 80;   
+    const REFRACTORY_MS = 450;  
+
+    let KURA_RADIUS = 150; 
+    let CASCADE_RADIUS = 220; 
+    let INTERACTION_RADIUS = 150; 
+
+    let width, height;
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+
+      const scale = width < 600 ? 0.45 : 1.0;
+      KURA_RADIUS = 150 * scale;
+      CASCADE_RADIUS = 220 * scale;
+      INTERACTION_RADIUS = 150 * scale;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Firefly {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.heading = Math.random() * Math.PI * 2;
+        const periodMs = 2000 + (Math.random() - 0.5) * 400;
+        this.omega = (2 * Math.PI) / periodMs; 
+        this.phase = Math.random() * Math.PI * 2;
+        this.nextPhase = this.phase;
+        this.state = 'CHARGING'; 
+        this.stateTimer = 0;
+        this.pendingKick = 0;    
+        this.forcedFlash = false;
+      }
+
+      computeStep(dt, fireflies) {
+        if (this.state === 'FLASHING') {
+          this.nextPhase = 0; 
+          return;
+        }
+        if (this.state === 'REFRACTORY') {
+          this.nextPhase = (this.phase + this.omega * dt) % (2 * Math.PI);
+          return;
+        }
+
+        let d_phase = this.omega;
+        let sum_coupling = 0;
+        let neighbors = 0;
+
+        for (let other of fireflies) {
+          if (other === this) continue;
+          let dx = other.x - this.x;
+          let dy = other.y - this.y;
+          if (dx*dx + dy*dy < KURA_RADIUS * KURA_RADIUS) {
+            sum_coupling += Math.sin(other.phase - this.phase);
+            neighbors++;
+          }
+        }
+
+        if (neighbors > 0) {
+          d_phase += (KURA_K / neighbors) * sum_coupling;
+        }
+        this.nextPhase = this.phase + (d_phase * dt) + this.pendingKick;
+        this.pendingKick = 0; 
+      }
+
+      commitStep(dt, fireflies) {
+        if (this.state === 'FLASHING') {
+          this.stateTimer -= dt;
+          if (this.stateTimer <= 0) {
+            this.state = 'REFRACTORY';
+            this.stateTimer = REFRACTORY_MS;
+          }
+        } 
+        else if (this.state === 'REFRACTORY') {
+          this.phase = this.nextPhase;
+          this.stateTimer -= dt;
+          if (this.stateTimer <= 0) {
+            this.state = 'CHARGING';
+          }
+        } 
+        else if (this.state === 'CHARGING') {
+          this.phase = this.nextPhase;
+          if (this.forcedFlash || this.phase >= 2 * Math.PI) {
+            this.forcedFlash = false;
+            this.state = 'FLASHING';
+            this.stateTimer = FLASH_HOLD_MS;
+            this.phase = 0; 
+
+            for (let other of fireflies) {
+              if (other === this || other.state !== 'CHARGING') continue;
+              let dx = other.x - this.x;
+              let dy = other.y - this.y;
+              if (dx*dx + dy*dy < CASCADE_RADIUS * CASCADE_RADIUS) {
+                other.pendingKick += PULSE_KICK;
+              }
+            }
+          }
+        }
+
+        this.heading += (Math.random() - 0.5) * 0.2;
+        const speed = 0.05 * dt; 
+        this.x += Math.cos(this.heading) * speed;
+        this.y += Math.sin(this.heading) * speed;
+
+        if (this.x < 0) this.x += width;
+        if (this.x > width) this.x -= width;
+        if (this.y < 0) this.y += height;
+        if (this.y > height) this.y -= height;
+      }
+
+      draw(ctx) {
+        let brightness;
+        if (this.state === 'FLASHING') {
+          brightness = 1.0; 
+        } else {
+          brightness = Math.pow((Math.cos(this.phase) + 1) / 2, 8);
+        }
+
+        let radius = 1.5 + (brightness * 3.5);
+        let alpha = 0.1 + (brightness * 0.9);
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 51, ${alpha})`;
+        
+        if (brightness > 0.1) {
+          ctx.shadowBlur = brightness * 16;
+          ctx.shadowColor = 'rgba(255, 255, 51, 0.8)';
+        } else {
+          ctx.shadowBlur = 0;
+        }
+        
+        ctx.fill();
+        ctx.shadowBlur = 0; 
+      }
+    }
+
+    const swarm = Array.from({length: NUM_FIREFLIES}, () => new Firefly());
+
+    let lastTime = performance.now();
+    function animate(currentTime) {
+      const dt = currentTime - lastTime;
+      lastTime = currentTime;
+
+      ctx.clearRect(0, 0, width, height);
+      for (let f of swarm) f.computeStep(dt, swarm);
+      for (let f of swarm) f.commitStep(dt, swarm);
+      for (let f of swarm) f.draw(ctx);
+      
+      requestAnimationFrame(animate);
+    }
+    
+    requestAnimationFrame((time) => {
+      lastTime = time;
+      animate(time);
+    });
+
+    document.addEventListener('click', (e) => {
+      if(!e.target.closest('a') && !e.target.closest('button')) {
+        triggerExcitationAt(e.clientX, e.clientY, INTERACTION_RADIUS);
+      }
+    });
+
+    const TEXT_COOLDOWN_MS = 500;
+    const TEXT_FLASH_DURATION_MS = 400; 
+
+    document.querySelectorAll('.node').forEach(node => {
+      node.setAttribute('data-text', node.innerText);
+  
+      let isCoolingDown = false;
+
+      node.addEventListener('mouseenter', (e) => {
+        if (isCoolingDown) return; 
+
+        const rect = node.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+        node.style.setProperty('--x', `${x}%`);
+        node.style.setProperty('--y', `${y}%`);
+
+        // Trigger the text flash
+        node.classList.add('is-flashing');
+        isCoolingDown = true;
+
+        setTimeout(() => node.classList.remove('is-flashing'), TEXT_FLASH_DURATION_MS);
+        setTimeout(() => isCoolingDown = false, TEXT_COOLDOWN_MS);
+      });
+    });
+
+    document.addEventListener('mouseover', (e) => {
+      const target = e.target.closest('.node, .nav-link, button');
+      if (target) {
+        const rect = target.getBoundingClientRect();
+        triggerExcitationAt(rect.left + rect.width / 2, rect.top + rect.height / 2, INTERACTION_RADIUS);
+      }
+    });
+
+    function triggerExcitationAt(x, y, radius) {
+      for (let f of swarm) {
+        let dx = f.x - x;
+        let dy = f.y - y;
+        if (dx*dx + dy*dy < radius * radius) {
+          if (f.state === 'CHARGING') { 
+            f.forcedFlash = true; 
+          }
+        }
+      }
+    }
+  </script>
+</body>
 </html>
